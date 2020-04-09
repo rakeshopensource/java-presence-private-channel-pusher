@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('bc1c84f6ee58bf65ee12', {
+    authEndpoint: 'http://localhost:8080/pusher/auth' , 
+      cluster: 'ap2',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('private-test');
+    channel.bind('testevent', function(data) {
+     var iDiv = document.createElement('div');
+     iDiv.style["color"] = "red"; 
+     document.getElementsByTagName('body')[0].appendChild(iDiv);
+     iDiv.innerHTML = JSON.stringify(data);
+    });
+
+    channel.bind('pusher:subscription_succeeded', function() {
+      alert("subscription subscription_succeeded");
+    }); 
+  </script>
+</head>
+<body>
+  <h1>Pusher Test Private Channel</h1>
+
+</body>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('bc1c84f6ee58bf65ee12', {
+    authEndpoint: 'http://localhost:8080/pusher/auth?id=Java' , 
+      cluster: 'ap2',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('presence-test');
+    channel.bind('private-test', function(data) {
+      alert(JSON.stringify(data));
+    });
+
+    channel.bind('pusher:subscription_succeeded', function(members) {
+      // alert("Connection established")
+    }); 
+
+    channel.bind('pusher:member_removed', function(member) {
+           var iDiv = document.createElement('div');
+           iDiv.style["color"] = "red"; 
+           document.getElementsByTagName('body')[0].appendChild(iDiv);
+           iDiv.innerHTML = member['id'] + ': is Offline';
+    }); 
+
+    channel.bind('pusher:member_added', function(member) {
+           var iDiv = document.createElement('div');
+           iDiv.style["color"] = "green"; 
+           document.getElementsByTagName('body')[0].appendChild(iDiv);
+           iDiv.innerHTML = member['id'] + ': is Online';
+
+    }); 
+
+  </script>
+</head>
+<body>
+  <h1>Pusher Test Presence Channel</h1>
+
+</body>
