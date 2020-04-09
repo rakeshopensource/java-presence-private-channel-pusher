@@ -33,24 +33,6 @@ public class PusherController {
         }
     }
 
-
-
-    /*@RequestMapping(value="/pusher/auth",
-            method=RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getAuthenticationString(@RequestBody MultiValueMap<String, String> formData){
-        String channelName = formData.getFirst("channel_name");
-        String socketId = formData.getFirst("socket_id");
-        String id = formData.getFirst("id");
-        if(channelName.startsWith("private")) {
-             return pusherService.getAuthenticationString(channelName,socketId);
-        } else{
-            return pusherService.getAuthenticationString(channelName,socketId,new PresenceUser(id));
-        }
-    }*/
-
-
     @GetMapping("/sendEventToPrivateChannel")
     public Result triggerData(){
        return pusherService.sendEventToPrivateChannel();
